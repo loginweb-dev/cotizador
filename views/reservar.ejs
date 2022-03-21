@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <%- include('partials/head'); %>
+</head>
+<body>
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-12 mt-3">
+				<h4>GRACIAS POR TU RESERVA</h4>
+				<table class="table">
+					<thead>
+						<tr>
+							<td>Entidad Financiera</td>
+							<td>Cuenta en Bs</td>
+							<td>Cuenta en $us</td>
+							<td>Representante</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Banco Union</td>
+							<td>120298259</td>
+							<td>22785860</td>
+							<td>Prada Representaciones</td>
+						</tr>
+						<tr>
+							<td>Banco Bisa</td>
+							<td>5310460011</td>
+							<td>5310462014</td>
+							<td>Prada Representaciones</td>
+						</tr>
+						<tr>
+							<td>Banco Ganadero</td>
+							<td>6041017406</td>
+							<td>604200886</td>
+							<td>Carlos Aurelio Prada Castedo</td>
+						</tr>
+					</tbody>
+				</table>
+				<p>Luego del depocito, un vendedor se comunicara para confirmar el pago.</p>
+				<div class="form-group">
+					<!-- <button type="submit" class="btn  btn-outline-danger btn-sm "> Reservar  </button> -->
+					<a type="button" href="/cotizador?user=<%-user_id%>"class="btn  btn-outline-secondary btn-sm"> Volver  </a>
+				</div>   
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

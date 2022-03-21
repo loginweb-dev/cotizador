@@ -1,0 +1,33 @@
+{
+    "2": {
+        "id": 2,
+        "first_name": "Manager",
+        "last_name": "Shop",
+        "phone": "76880951"
+    },
+    "7": {
+        "id": 7,
+        "first_name": "Marilin",
+        "last_name": "Chormini",
+        "phone": "78746621"
+    },
+    "45": {
+        "id": 45,
+        "first_name": "percy",
+        "last_name": "alvarez",
+        "phone": "71130523"
+    },
+    "47": {
+        "id": 47,
+        "first_name": "luis",
+        "last_name": "flores",
+        "phone": "76886773"
+    },
+    "54": {
+        "id": 54,
+        "first_name": "Jonathan Emanuel",
+        "last_name": "Chavez Moscoso",
+        "phone": "70269362"
+    },
+    "undefined": {}
+}

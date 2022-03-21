@@ -1,0 +1,25 @@
+{
+  "name": "proformas",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.24.0",
+    "dotenv": "^10.0.0",
+    "ejs": "~2.6.1",
+    "express": "~4.16.1",
+    "financejs": "^4.1.0",
+    "moment": "^2.29.1",
+    "nodemailer": "^6.7.2",
+    "simple-json-db": "^1.2.3",
+    "web-push": "^3.4.5"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}

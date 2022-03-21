@@ -1,0 +1,272 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <%- include('partials/head'); %>
+	<link href="css/floting.css" rel="stylesheet"/>
+	<!-- <script src="js/main.js"></script> -->
+</head>
+<body>
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-12 offset-md-3 col-md-6 mt-3">
+				<form action="/calcular" method="GET">
+						<h5> <u>CLIENTE</u> </h5>
+						<div class="form-group input-group">
+				
+							<!-- <select class="form-control" disabled>
+								<option selected="">+591</option>
+							</select> -->
+							<input name="phone" id="phone" class="form-control" placeholder="Telefono (*)" type="number" value="" required autofocus>
+							<a href="#" id="search" class="form-control btn btn-sm btn-dark" style="max-width: 60px;"> Buscar </a>
+						</div> 
+					<div class="form-group input-group">
+
+						<input name="vendedor" class="form-control"  type="text" value="<%-user.id%>" hidden>
+						
+						<input name="first_name" id="first_name" class="form-control" placeholder="Nombres (*)" type="text" value="">
+			
+						<input name="last_name" id="last_name" class="form-control" placeholder="Apellidos (*)" type="text" value="" required>
+					</div> 
+					<!-- <div class="form-group input-group">
+				
+						<select class="form-control" style="max-width: 80px;" disabled>
+							<option selected="">+591</option>
+						</select>
+						<input name="phone" class="form-control" placeholder="Telefono (*)" type="text" value="">
+					</div>  -->
+					<div class="form-group input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+						 </div>
+						<input name="email" id="email" class="form-control" placeholder="Correo Electronico" type="email">
+					</div> <!-- form-group// -->
+					<h5> <u> PLAN DE PAGO </u></h5>
+					<div class="form-group input-group">
+						<strong class="form-control" style="max-width: 70px;">
+							Plazo
+						</strong>
+						<input name="plazo" class="form-control" placeholder="Plazo en meses (*)" type="text" value="24" required>
+					
+						<strong class="form-control" style="max-width: 80px;">
+							Inicial
+						</strong>
+						<input name="inicial" class="form-control" placeholder="Plazo (*)" type="text" value="3000" required>
+					
+					</div>
+					<h5> <u>PRODUCTO</u> </h5>
+					<div class="form-group input-group">
+						<select class="form-control" id="products" required>
+							<option>Elige una opcion</option>
+							<% var count=0; products.forEach(function(product){ %>
+								<option value="<%= count++ %>"><%= product.name %></option>
+							<% })%>
+						</select>
+						<input class="form-control" type="text" value="" id="product_id" name="product_id" hidden required>
+						<input class="form-control" placeholder="Precio" type="text" style="max-width: 80px;" id="price" disabled>
+					</div>
+					<div class="form-group text-center">
+						<div id="miimg"></div>
+					</div>    
+				
+					
+					<div class="form-group text-center">
+						<button id="misubmit" type="submit" class="btn btn-outline-danger"> C O T I Z A R  </button>
+						<!-- <a type="button" href="/proformas" class="btn btn-outline-primary btn-sm"> Ingresar  </a> -->
+						<!-- <a href="/" class="btn btn-outline-dark btn-sm"> Salir  </a> -->
+						<br>
+						<small>son obligatorios todos los campos con asterisco *</small>
+					</div>            
+					<div class="form-group">
+						<header class="card-header">
+							<a href="#" data-toggle="collapse" data-target="#collapse22" aria-expanded="true" class="">
+								<i class="icon-action fa fa-chevron-down"></i>
+								<h5 class="title">REQUISITOS </h5>
+							</a>
+						</header>
+						<div class="collapse" id="collapse22" style="">
+							<article class="card-body">
+								<div class="col-sm-12">
+									<!-- <h4 class="title">Requisitos</h4> -->
+									<div class="form-group">
+										<label for="">Garantes</label>
+										<input class="form-control" type="number" name="" id="garante" value="2" readonly>
+									</div>
+									<p>Para el Clientes y los Garantes</p>
+								</div>
+								<div class="col-sm-12">
+									<h6 class="title">Dependientes</h6>
+									<form>
+										<label class="form-check">
+											<input class="form-check-input" type="checkbox" value="" id="fci" checked>
+											<span class="form-check-label">
+												--- Fotocopia Carnet de Identidad a Color
+											</span>
+										</label> 
+										<label class="form-check">
+											<input class="form-check-input" type="checkbox" id="ubs"  value="" checked>
+											<span class="form-check-label">
+												--- Ultima Boleta de Sueldo, Planilla o Certificado de trabajo
+											</span>
+										</label>
+										<label class="form-check">
+											<input class="form-check-input" id="cfl" type="checkbox" value="" checked>
+											<span class="form-check-label">
+												--- Copia de Factura de luz del Domicilio
+											</span>
+										</label>
+										<label class="form-check">
+											<input class="form-check-input" id="cdt" type="checkbox" value="" checked>
+											<span class="form-check-label">
+												--- Croquis Domicilio y Trabajo
+											</span>
+										</label>
+										<label class="form-check">
+											<input class="form-check-input" id="afp" type="checkbox" value="" checked>
+											<span class="form-check-label">
+												--- Extracto de  AFP
+											</span>
+										</label>
+									</form>
+								</div>
+								<div class="col-sm-4">
+									<h6 class="title">Independientes</h6>
+									<!-- <form> -->
+										<label class="form-check">
+											<input class="form-check-input" id="fci2" type="checkbox" value="" checked>
+											<span class="form-check-label">
+												--- Fotocopia de Carnet de Identidad a Color
+											</span>
+										</label> 
+										<label class="form-check">
+											<input class="form-check-input" id="nit"  type="checkbox" value="" checked>
+											<span class="form-check-label">
+												--- Fotocopia de NIT o Licencia de Funcionamiento
+											</span>
+										</label>
+										<label class="form-check">
+											<input class="form-check-input" id="cfd"  type="checkbox" value="" checked>
+											<span class="form-check-label">
+												--- Copia Factura de Luz del Domicilio
+											</span>
+										</label>
+									<!-- </form> -->
+								</div>
+							</article> <!-- card-body.// -->
+						</div > <!-- collapse .// -->
+					</div>                                                
+				</form>
+			</div>
+		</div>
+
+	</div>
+
+
+	<div class="fab-container">
+		<div class="fab fab-icon-holder">
+		  <i class="fas fa-bars"></i>
+		</div>
+		<ul class="fab-options">
+		  <li>
+				<span class="fab-label">Proformas</span>
+				<div class="fab-icon-holder">
+				<a href="/allproformas">
+					<i class="fas fa-cog"></i>
+				</a>
+				</div>
+			</li>
+			<li>
+				<span class="fab-label">Reservas</span>
+				<div class="fab-icon-holder">
+				<a href="/allreservas">
+					<i class="fas fa-cog"></i>
+				</a>
+				</div>
+			</li>
+			<li>
+				<span class="fab-label">Ayuda</span>
+				<div class="fab-icon-holder">
+					<a href="/help">
+						<i class="fas fa-question"></i>
+					</a>
+				</div>
+			</li>
+			<li>
+				<span class="fab-label">Salir</span>
+				<div class="fab-icon-holder">
+					<a href="/">
+						<i class="fa fa-times"></i>
+					</a>
+				</div>
+			</li>
+		  <!-- <li>
+			<span class="fab-label">Live Chat</span>
+			<div class="fab-icon-holder">
+			  <i class="fas fa-comments"></i>
+			</div>
+		  </li>
+		  <li>
+			<span class="fab-label">Feedback</span>
+			<div class="fab-icon-holder">
+			  <i class="fas fa-comment-alt"></i>
+			</div>
+		  </li> -->
+		</ul>
+	  </div>
+
+	<script type="text/javascript">
+		$( "#products" ).change(function() {	
+			var miproducts = '<%- JSON.stringify(products) %>';
+			var stringify = JSON.parse(miproducts);
+			$('#price').val(JSON.parse(stringify[this.value]['regular_price']));
+			$('#product_id').val(JSON.parse(stringify[this.value]['id']));
+			$('#miimg').html("<img src='"+stringify[this.value]['image']+"' class='img-thumbnail'>");
+		});
+		$('#collapse22').on('shown.bs.collapse', function(event) {
+			$('html, body').animate({
+			scrollTop: $(event.target).parent().offset().top
+			}, 400);
+		});
+
+		$( "#misubmit" ).click(function() {
+			$.notify("solicitud de registro enviada.", "success");
+		});
+
+		$( "#search" ).click(function() {
+			$.notify("recuperando dato", "success");
+			misearch();
+		});
+
+		$("#phone").on('keyup', function (e) {
+			if (e.key === 'Enter' || e.keyCode === 13 || e.keyCode === 9 || e.key === 'Tab') {
+				misearch();
+			}
+		});
+		function misearch() {
+			$.ajax({
+                url: 'https://hondaprada.com.bo/wp-json/wp/v2/lw_phone',
+                dataType: 'json',
+                data: {"phone": $('#phone').val()},
+                success: function (response) {
+					$.notify("dato recuperado", "info");
+					// console.log(response);
+                    // $("#nombre").val(response.nombre);
+                    // $("#apellido").val(response.apellido);
+                    // console.log(response.id);
+                    // if (response.id == null) {
+                    //     $.notify("Cliente NO Encontrado", "success");
+                    // }else{
+                    //     $.notify("Cliente Encontrado", "success");
+                    // }
+					$('#first_name').val(response.nombre);
+					$('#last_name').val(response.apellido);
+					$('#email').val(response.email);
+                    $('#first_name').focus();
+                }
+            });
+		}
+	</script>
+
+</body>
+</html>

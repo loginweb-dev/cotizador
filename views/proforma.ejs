@@ -1,0 +1,220 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <%- include('partials/head'); %>
+	<style>
+	.frame{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	height: 80px;
+	width: 350px;
+	position: relative;
+	box-shadow:
+	-7px -7px 20px 0px #fff9,
+	-4px -4px 5px 0px #fff9,
+	7px 7px 20px 0px #0002,
+	4px 4px 5px 0px #0001,
+	inset 0px 0px 0px 0px #fff9,
+	inset 0px 0px 0px 0px #0001,
+	inset 0px 0px 0px 0px #fff9,        inset 0px 0px 0px 0px #0001;
+	transition:box-shadow 0.6s cubic-bezier(.79,.21,.06,.81);
+	border-radius: 10px;
+	}
+
+	.btn{
+	height: 45px;
+	width: 45px;
+	border-radius: 12px;
+	background: #e0e5ec;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	-webkit-tap-highlight-color: transparent;
+	box-shadow:
+	-7px -7px 20px 0px #fff9,
+	-4px -4px 5px 0px #fff9,
+	7px 7px 20px 0px #0002,
+	4px 4px 5px 0px #0001,
+	inset 0px 0px 0px 0px #fff9,
+	inset 0px 0px 0px 0px #0001,
+	inset 0px 0px 0px 0px #fff9,        inset 0px 0px 0px 0px #0001;
+	transition:box-shadow 0.6s cubic-bezier(.79,.21,.06,.81);
+	font-size: 26px;
+	color: rgba(42, 52, 84, 1);
+	text-decoration: none;
+	}
+	.btn:active{
+	box-shadow:  4px 4px 6px 0 rgba(255,255,255,.5),
+				-4px -4px 6px 0 rgba(116, 125, 136, .2), 
+		inset -4px -4px 6px 0 rgba(255,255,255,.5),
+		inset 4px 4px 6px 0 rgba(116, 125, 136, .3);
+	}
+	</style>
+</head>
+<body>
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-12 offset-md-3 col-md-6 mt-3">
+
+				<h4 class="text-center">Proforma #<%=midata.id%></h4>
+				<div class="form-group">
+					<h5 class=""><u>MODELO:</u> <%= midata.product_name %></h5>
+				</div>
+				<div class="form-group">
+					<img src="<%= midata.image %>" class="img-thumbnail">
+				</div>
+				<div class="form-group">
+					<table class="table">
+						<tbody>
+							<tr>
+								<td><strong>Precio Bs</strong></td>
+								<td><small><%= Number(midata.product_price).toFixed(0) %></small></td>
+								<td><strong>Cuota M.</strong></td>
+								<td><small><%= Number(midata.cuota_fija).toFixed(2) %></small></td>
+							</tr>
+							<tr>
+								<td><strong>C. Inicial</strong></td>
+								<td><small><%= midata.inicial %></small></td>
+								<td><strong>Plazo</strong></td>
+								<td><small><%= midata.plazo %> Meses</small></td>
+							</tr>
+							<tr>
+								<td><strong>Cliente</strong></td>
+								<td><small><%= midata.customer_first_name %> <%= midata.customer_last_name %></small></td>
+								<td><strong>Canales:</strong></td>
+								<td>
+									<small><%= midata.customer_phone %></small>
+									<br>
+									<small><%= midata.customer_email %></small>
+								</td>
+							</tr>
+							<tr>
+								<td><strong>Vendedor</strong></td>
+								<td><small><%- midata.vendedor_first_name %> <%- midata.vendedor_last_name %></small></td>
+								<td><strong>Whatsapp</strong></td>
+								<td><small><%- midata.vendedor_phone%></small></td>
+							</tr>
+						
+						</tbody>
+					</table>
+				</div>
+				<hr>
+				<h4 class="text-center">Comparte en:</h4>
+				<div class="form-group">
+					<div class ="frame">
+						<button onclick="whatsapp()" class="btn">
+							<i class="fab fa-whatsapp" style="color: #55EA64;"></i>
+						</button>
+						<button class="btn" onclick="pdf('<%-midata.id%>')" target="_blank">
+							<i class="fas fa-file-pdf"></i>
+						</button>
+						<button class="btn" onclick="email('<%-midata.id%>')">
+							<i class="far fa-envelope"></i>
+						</button>
+						<!-- <a href="#" class="btn">
+							<i class="fab fa-telegram" style="color: #289FDB;"></i>
+					   	</a>
+						<a href="javascript;" class="btn">
+							<i class="fab fa-facebook-messenger" style="color: #3b5998;"></i>
+						</a>
+						<a href="javascript;" class="btn">
+							<i class="fa fa-comment"></i>
+						</a>
+					 -->
+					</div>
+				</div>
+				<!-- <br> -->
+				<!-- <button class="form-control" onclick="history.back()">Atras</button> -->
+				<br>
+			</div>
+		</div>
+	</div>
+
+
+	<script>
+		function whatsapp() {
+			let micaption = 'PROFORMA #<%-midata.id%>\n';
+			micaption = micaption + 'MODELO: <%-midata.product_name%>\n';
+			micaption = micaption + 'PRECIO: <%-midata.product_price%>\n';
+			micaption = micaption + 'CUOTA M: <%-midata.cuota_fija%>\n';
+			micaption = micaption + 'C. INICIAL: <%-midata.inicial%>\n';
+			micaption = micaption + 'PLAZO: <%-midata.plazo%> Meses\n';
+			micaption = micaption + 'E. VENTAS: <%-midata.vendedor_first_name%> <%-midata.vendedor_last_name%> \n';
+			micaption = micaption + '-------------------------------\n';
+			micaption = micaption + 'c.- Otras formas de pago (cotizador)\n';
+			micaption = micaption + 'r.- Reservar producto\n';
+			micaption = micaption + '1.- Todos los productos\n';
+			micaption = micaption + '0.- Volver al menu principal\n';
+
+			let attachment = '/var/www/prada/wp-content/uploads/<%-midata.location%>';
+			let phone = '<%-midata.customer_phone%>';
+			$.ajax({
+				type: "get",
+				url: "https://chatbot.hondaprada.com.bo",
+				data: {phone: phone, message: micaption, type: "galery",  attachment: attachment},
+				success: function (response) {
+
+				}
+			});
+			location.href = '/allproformas';
+		}
+		function pdf(id) {
+			location.href= 'https://hondaprada.com.bo/wp-content/plugins/fatcomwp/views/proforma_pdf.php?cod_proforma='+id;
+
+		}
+		function email(id) {
+			let micaption = 'PROFORMA #<%-midata.id%>\n';
+			micaption = micaption + 'MODELO: <%-midata.product_name%>\n';
+			micaption = micaption + 'MODELO: <%-midata.product_image%>\n';
+			micaption = micaption + 'PRECIO: <%-midata.product_price%>\n';
+			micaption = micaption + 'CUOTA M: <%-midata.cuota_fija%>\n';
+			micaption = micaption + 'C. INICIAL: <%-midata.inicial%>\n';
+			micaption = micaption + 'PLAZO: <%-midata.plazo%> Meses\n';
+			micaption = micaption + 'E. VENTAS: <%-midata.vendedor_first_name%> <%-midata.vendedor_last_name%> \n';
+
+			// let attachment = '/var/www/prada/wp-content/uploads/<%-midata.location%>';
+			// let email = '<%-midata.email%>'
+			let email = '<%-midata.customer_email%>';
+			// let proforma_id = ;
+			$.ajax({
+				type: "get",
+				url: "https://chatbot.hondaprada.com.bo",
+				data: {email: email, message: id, type: "email"},
+				success: function (response) {
+
+				}
+			});
+			location.href = '/allproformas';
+		}
+		function midelete(id) {
+			$.ajax({
+				type: "get",
+				url: "https://hondaprada.com.bo/wp-json/wp/v2/lw_proforma_delete",
+				data: {id: id},
+				dataType: "json",
+				success: function (response) {
+					location.reload();
+				}
+			});
+		}
+
+		function misend(params) {
+			$.ajax({
+				type: "get",
+				url: "https://chatbot.hondaprada.com.bo/",
+				data: {id: id},
+				success: function (response) {
+					// alert(response.lw_status);
+					// location.reload();
+				}
+			});
+		}
+	</script>
+</body>
+</html>

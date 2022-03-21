@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <%- include('partials/head'); %>
+</head>
+<body>
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-12 offset-md-3 col-md-6 mt-3">
+
+				<h4>Lista de proformas emitidas</h4>
+				<p>Cantidad total: <%=midata.length%></p>
+				
+				<table class="table table-responsive" id="mitable">
+					<thead>
+						<tr>
+							<td>#</td>
+							<td>Ciiente</td>
+							<td>Producto</td>
+							<td>Detalle</td>
+							<td>Chatbot</td>
+						</tr>
+					</thead>
+					<tbody>
+						<%for(var i = 0; i < midata.length; i++){%>
+						<tr id="mirow<%=midata[i].id%>"></tr>
+							<td>
+								# <%=midata[i].id%>
+								<br>
+								# <%=midata[i].num%>
+								
+							</td>
+							<td>
+								#<%=midata[i].customer_id%>
+								<br>
+								<%=midata[i].customer_first_name%> 
+								<br>
+								<%=midata[i].customer_last_name%>
+							</td>
+							<td>
+								#<%=midata[i].product_id%>
+								<br>
+								<%=midata[i].product_name%>
+								<br>
+								<%=midata[i].product_price%>
+							</td>
+							<td>
+								Plazo: <%=midata[i].plazo%>
+								<br>
+								Inicial: <%=midata[i].inicial%>
+							
+								<br>
+								<%=  moment(new Date(midata[i].date)).format("ll") %>
+							</td>
+							<td> 
+								<a type="button" href="/proforma?id=<%=midata[i].id%>" class="btn  btn-outline-danger btn-sm ">Ver</a> 
+								<br>
+								<button type="button" onclick="midelete('<%=midata[i].id%>')" class="btn  btn-outline-dark btn-sm ">De Baja</button> 
+							</td>
+						</tr>
+						<%}%>
+					</tbody>
+				</table>
+				<hr>
+				<!-- <a href="/" class="form-control" type="button">Atras</a> -->
+				<br>
+				<!-- <div class="form-group"> -->
+					<!-- <button type="submit" class="btn  btn-outline-danger btn-sm "> Reservar  </button> -->
+					<!-- <a type="button" href="/cotizador"class="btn  btn-outline-secondary btn-sm"> Salir  </a> -->
+				<!-- </div>    -->
+			</div>
+		</div>
+	</div>
+
+	<script>
+		function midelete(id) {
+			$.ajax({
+				type: "get",
+				url: "https://hondaprada.com.bo/wp-json/wp/v2/lw_proforma_delete",
+				data: {id: id},
+				dataType: "json",
+				success: function (response) {
+					location.reload();
+				}
+			});
+		}
+
+		function misend(params) {
+			$.ajax({
+				type: "get",
+				url: "https://chatbot.hondaprada.com.bo/",
+				data: {id: id},
+				dataType: "json",
+				success: function (response) {
+					// alert(response.lw_status);
+					location.reload();
+				}
+			});
+		}
+	</script>
+</body>
+</html>

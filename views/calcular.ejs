@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <%- include('partials/head'); %>
+</head>
+<body>
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-12 offset-md-3 col-md-6 mt-3">
+				<div class="form-group">
+					<h5 class="text-center"><u>MODELO:</u> <%= midata.name %></h5>
+				</div>
+				<div class="form-group text-center">
+					<img src="<%= midata.image %>" class="img-thumbnail">
+				</div>
+				<div class="form-group">
+					<table class="table">
+						<tbody>
+							<tr>
+								<td><strong>Precio Bs</strong></td>
+								<td><small><%= Number(midata.regular_price).toFixed(0) %></small></td>
+								<td><strong>Cuota M.</strong></td>
+								<td><small><%= Number(mitable[0].cuota_fija).toFixed(2) %></small></td>
+							</tr>
+							<tr>
+								<td><strong>C. Inicial</strong></td>
+								<td><small><%= Number(setting.inicial).toFixed(0) %></small></td>
+								<td><strong>Plazo</strong></td>
+								<td><small><%= setting.plazo %> Meses</small></td>
+							</tr>
+							<tr>
+								<td><strong>Cliente</strong></td>
+								<td><small><%= user.nombre %> <%= user.apellido %></small></td>
+								<td><strong>Telefono:</strong></td>
+								<td><small><%= user.billing_phone %></small></td>
+							</tr>
+							<tr>
+								<td><strong>Vendedor</strong></td>
+								<td><small><%- vendedor.first_name %> <%- vendedor.last_name %> </small></td>
+								<td><strong>Whatsapp</strong></td>
+								<td><small><%- vendedor.phone %></small></td>
+							</tr>
+							<tr>
+								<td><strong>Proforma</strong></td>
+								<td><small># <%= setting.proforma %> <br> # <%= setting.proforma_num %></small></td>
+								<td><strong>Fecha</strong></td>
+								<td><small><%= new Date()  %></small></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<hr>
+				<div class="form-group text-center">
+					<form action="/reservar" method="GET">
+
+						<input type="text" value="<%= user.id %>" id="user_id" name="user_id" hidden>
+						<input type="text" value="<%= midata.id %>" id="product" name="product" hidden>
+						<input type="text" value="<%= user.billing_phone %>" id="custumer" name="customer" hidden>
+						<input type="text" value="<%= setting.inicial%>" id="monto" name="monto" hidden>
+
+						<button type="submit" class="btn  btn-outline-danger "> R E S E R V A R  </button>
+						<!-- <a type="button" href="/cotizador?user=<%-user.id%> "class="btn  btn-outline-secondary btn-sm"> Volver  </a> -->
+						<!-- <hr>
+						<button class="form-control" onclick="history.back()">Atras</button> -->
+					</form>	
+				</div>   
+				<hr>
+				<div class="form-group">
+					<header class="card-header">
+						<a href="#" data-toggle="collapse" data-target="#collapse22" aria-expanded="true" class="">
+							<i class="icon-action fa fa-chevron-down"></i>
+							<h5 class="title">REQUISITOS </h5>
+						</a>
+					</header>
+					<div class="collapse" id="collapse22" style="">
+						<article class="card-body">
+							<div class="col-sm-4">
+								<!-- <h4 class="title">Requisitos</h4> -->
+								<div class="form-group">
+									<label for="">Garantes</label>
+									<input class="form-control" type="number" name="" id="garante" value="2" readonly>
+								</div>
+								<p>Para el Clientes y los Garantes</p>
+							</div>
+							<div class="col-sm-4">
+								<h6 class="title">Dependientes</h6>
+								<form>
+									<label class="form-check">
+										<input class="form-check-input" type="checkbox" value="" id="fci" checked>
+										<span class="form-check-label">
+											--- Fotocopia Carnet de Identidad a Color
+										</span>
+									</label> 
+									<label class="form-check">
+										<input class="form-check-input" type="checkbox" id="ubs"  value="" checked>
+										<span class="form-check-label">
+											--- Ultima Boleta de Sueldo, Planilla o Certificado de trabajo
+										</span>
+									</label>
+									<label class="form-check">
+										<input class="form-check-input" id="cfl" type="checkbox" value="" checked>
+										<span class="form-check-label">
+											--- Copia de Factura de luz del Domicilio
+										</span>
+									</label>
+									<label class="form-check">
+										<input class="form-check-input" id="cdt" type="checkbox" value="" checked>
+										<span class="form-check-label">
+											--- Croquis Domicilio y Trabajo
+										</span>
+									</label>
+									<label class="form-check">
+										<input class="form-check-input" id="afp" type="checkbox" value="" checked>
+										<span class="form-check-label">
+											--- Extracto de  AFP
+										</span>
+									</label>
+								</form>
+							</div>
+							<div class="col-sm-4">
+								<h6 class="title">Independientes</h6>
+								<!-- <form> -->
+									<label class="form-check">
+										<input class="form-check-input" id="fci2" type="checkbox" value="" checked>
+										<span class="form-check-label">
+											--- Fotocopia de Carnet de Identidad a Color
+										</span>
+									</label> 
+									<label class="form-check">
+										<input class="form-check-input" id="nit"  type="checkbox" value="" checked>
+										<span class="form-check-label">
+											--- Fotocopia de NIT o Licencia de Funcionamiento
+										</span>
+									</label>
+									<label class="form-check">
+										<input class="form-check-input" id="cfd"  type="checkbox" value="" checked>
+										<span class="form-check-label">
+											--- Copia Factura de Luz del Domicilio
+										</span>
+									</label>
+								<!-- </form> -->
+							</div>
+						</article> <!-- card-body.// -->
+					</div> <!-- collapse .// -->
+				</div>
+				
+				<div class="form-group">
+					<header class="card-header">
+						<a href="#" data-toggle="collapse" data-target="#collapse23" aria-expanded="true" class="">
+							<i class="icon-action fa fa-chevron-down"></i>
+							<h5 class="title">PLAN DE PAGO </h5>
+						</a>
+					</header>
+					<div class="collapse" id="collapse23" style="">
+						<!-- <article class="card-body"> -->
+							<div class="col-sm-12">
+								<!-- <small>Detalles del Plan de Pagos</small> -->
+								<table class="table table-bordered"> 
+									<thead>
+										<tr>
+											<th scope="col">#</th>
+											<th>Capital</th>
+											<th>Interes</th>
+											<th>Total</th>
+										</tr>
+									</thead>
+									<tbody>
+										<% for(i = 0; i < mitable.length; i++ ){ %>
+											<tr>
+												<td><%= mitable[i].periodo %></td>
+												<td><%= Number(mitable[i].abono_capital).toFixed(2)  %></td>
+												<td><%= Number(mitable[i].interes).toFixed(2)  %></td>
+												<td><%= Number(mitable[i].cuota_fija).toFixed(2) %></td>
+											</tr>
+											<% } %>
+									</tbody>
+								</table>
+							</div>
+						<!-- </article>	 -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		$('#collapse22').on('shown.bs.collapse', function(event) {
+			$('html, body').animate({
+			scrollTop: $(event.target).parent().offset().top
+			}, 400);
+		});
+		$('#collapse23').on('shown.bs.collapse', function(event) {
+			$('html, body').animate({
+			scrollTop: $(event.target).parent().offset().top
+			}, 400);
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <%- include('partials/head'); %>
+</head>
+<body>
+
+    <div class="container-fluid mt-3">
+        <div class="row">
+            <div class="col-sm-12 offset-md-3 col-md-6">
+                <div class="form-group text-center">
+                    <h3 class="text-center">C O T I Z A D O R</h3>
+                    <img src="images/logo_prada.jpg" class="img-thumbnail">
+                </div>
+                
+                <div class="form-group">
+                    <div class="form-group input-icon">
+                        <i class="fa fa-user"></i>
+                        <input type="number" name="phone" id="phone" class="form-control" placeholder="whatsapp (telefono 8 digitos)" maxlength="8" required>
+                    </div>
+                    <div class="form-group input-icon">
+                        <i class="fa fa-lock"></i> 
+                        <input name="pin" id="pin" class="form-control" placeholder="si no tienes tu pin escriba 0" type="password" pattern="[0-9]*" inputmode="numeric" required>
+                    </div> 
+                    <button id="ingresar" onclick="ingresar()" class="btn btn-success btn-block"> Ingresar  </button>
+                    <!-- <br> -->
+                    <small>todos los campos son obligatorios</small>
+                </div>
+
+                <div class="form-group">
+                    <div id="message"></div>
+                </div>
+                <div id="reload"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        $.notify.defaults({globalPosition: 'bottom right'});
+        function get_pin() {
+            $('#reload').html("<center><img class='img-sm' src='images/loading.gif'></center>");	
+            $('#ingresar').text('Enviando Solicitud');
+            $('#message').html('<small>la respuesta del CHATBOT, suele tarder un monento, espere por favor. si la respuesta tarda demasido intentelo nuevamente con un whatsapp valido (8 digitos)</small>');
+            var pin = Math.floor(1000 + Math.random() * 9000);
+            $.ajax({
+                url: 'https://hondaprada.com.bo/wp-json/wp/v2/lw_pin',
+                method: 'GET',
+                dataType: "json",
+                data: { phone: $('#phone').val(), pin: pin },
+                success: function( data) {
+                    if (data.lw_status) {
+                        $.notify("Pin creado correctamente, revisa tu whatsapp", "info");
+                        $.ajax({
+                            type: "get",
+                            url: "https://chatbot.hondaprada.com.bo",
+                            data: { phone: $('#phone').val(), message: 'PIN para ingresar al COTIZADOR (HONDA PRADA): '+pin+'\n Te aconsejo que elimines este mensaje lo mas antes pocible, para proteger tu cuenta.', type: 'pin' },
+                            dataType: "json",
+                            success: function (response) {
+                                
+                            },
+                            error: function (error){
+                                $('#reload').html('');
+                                $('#ingresar').html('Ingresar');
+                            }
+                        });
+                    } else {
+                        $.notify("Error al crear el pin", "error");
+                        $('#reload').html('');
+                    }
+                }
+            });
+        }
+
+        function ingresar() {
+            if ($('#phone').val() == '' || $('#pin').val() == '') {
+                $.notify("Todos los campos son obligatorios", "error");
+            } else {
+                if ($('#pin').val() == 0) {
+                    get_pin();
+                } else {
+                    $('#reload').html("<center><img class='img-sm' src='images/loading.gif'></center>");	
+                    $.ajax({
+                        url: 'https://hondaprada.com.bo/wp-json/wp/v2/lw_login',
+                        method: 'GET',
+                        dataType: "json",
+                        data: { phone: $('#phone').val(), pin: $('#pin').val() },
+                        success: function( data) {
+                            console.log( data.lw_status );
+                            if (data.lw_status) {
+                                $.notify("Bienvenido al COTIZADOR "+data.nombre, "info");
+                                location.href = '/cotizador?user='+data.id;
+                            } else {
+                                $.notify("Error en las credenciales", "error");
+                                $('#reload').html('');
+                            }
+                        }
+                    });
+                }
+            }
+        }
+
+        $("#pin").on('keypress',function(e) {
+            if(e.which == 13) {
+                ingresar();
+            }
+        });
+    </script>
+</body>
+</html>
